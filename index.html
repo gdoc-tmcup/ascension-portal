@@ -42,6 +42,10 @@
       margin-bottom: 10px;
     }
 
+    #choose-show {
+      display: none;
+    }
+
     #links {
       display: flex;
       justify-content: space-between;
@@ -49,8 +53,20 @@
       width: 100%;
     }
 
-    #links a {
+    #links h3 {
+      margin: 10px auto;
+    }
+
+    #links > * {
       width: 49%;
+    }
+
+    main[display-shows] #links .link:not(.show) {
+      display: none;
+    }
+
+    main[display-shows] #links .show, main[display-shows] #choose-show {
+      display: block;
     }
 
     .link {
@@ -70,17 +86,26 @@
       color: black;
     }
 
-    h2 {
+    .link-catcher {
       font-size: 1.1rem;
       font-weight: unset;
       margin-bottom: 0;
     }
 
-    .link-title {
+    .link h2, .link h3 {
       font-size: 1.5rem;
       font-weight: bold;
       margin-top: 10px;
       margin-bottom: 0;
+    }
+
+    .show {
+      display: none;
+    }
+
+    .show .show-date {
+      margin: 0;
+      margin-bottom: 10px;
     }
 
     .link-subtitle {
@@ -97,7 +122,7 @@
       display: none;
     }
 
-    #discord .link-title {
+    #discord h2 {
       margin-bottom: 16px;
     }
 
@@ -135,17 +160,27 @@
         flex-direction: column;
       }
 
-      #links a, #discord {
+      #links > *, #discord {
         width: 100%;
         max-width: 400px;
       }
 
-      #links a:last-child {
+      #links > *:not(.first-link) {
         margin-top: 10px;
       }
 
-      .link-title {
+      .link h2, .link h3 {
         font-size: 1.4rem;
+      }
+
+      #choose-show {
+        font-size: 1.3rem;
+      }
+    }
+
+    @media screen and (min-width: 750px) {
+      main[display-shows] #links > * {
+        width: 32%;
       }
     }
 
@@ -158,24 +193,34 @@
 
   <script type="application/javascript">
     document.addEventListener("DOMContentLoaded", () => {
-      let screenType = window.innerWidth < 600 ? "mobile" : "desktop";
-      const mobileImage = document.getElementById("image-mobile");
-      const desktopImage = document.getElementById("image-desktop");
-      updateAriaHiddenAttributes(screenType);
+      const mainElement = document.querySelector("main");
+      const showElements = document.querySelectorAll(".show");
+      const gdocButton = document.getElementById("gdoc");
+      const mapButton = document.getElementById("map");
 
-      function updateAriaHiddenAttributes(screenType)
-      {
-        mobileImage.setAttribute("aria-hidden", screenType === "desktop");
-        desktopImage.setAttribute("aria-hidden", screenType === "mobile");
-      }
+      const gdocLinks = {
+        paris: "#paris-gdoc",
+        lille: "#lille-gdoc",
+        montpellier: "#montpellier-gdoc"
+      };
+      const mapLinks = {
+        paris: "#paris-map",
+        lille: "#lille-map",
+        montpellier: "#montpellier-map"
+      };
 
-      window.addEventListener("resize", () => {
-        let newScreenType = window.innerWidth < 600 ? "mobile" : "desktop";
-        if(newScreenType !== screenType) {
-          screenType = newScreenType;
-          updateAriaHiddenAttributes(screenType);
-        }
+      showElements.forEach((element) => {
+        element.addEventListener("click", () => {
+          toggleShowsDisplay();
+          gdocButton.setAttribute("href", gdocLinks[element.id]);
+          mapButton.setAttribute("href", mapLinks[element.id]);
+        });
       });
+
+      function toggleShowsDisplay()
+      {
+        mainElement.toggleAttribute("display-shows");
+      }
     });
   </script>
 </head>
@@ -183,26 +228,40 @@
 <body>
   <h1>Portail d'organisation des trajets / hébergements pour Ascension 2023</h1>
 
-  <main>
+  <main display-shows>
     <img src="img/visuel-ascension-2023.jpg" alt="Visuel du tournoi Ascension 2023" width="100%" id="image-desktop" loading="lazy" />
     <img src="img/visuel-ascension-2023-mobile.jpg" alt="Bannière du tournoi Ascension 2023" width="100%" id="image-mobile" loading="lazy" />
 
+    <h2 id="choose-show">Choisis le spectacle qui t'intéresse :</h2>
+
     <div id="links">
-      <a href="https://docs.google.com/spreadsheets/d/ID_HERE/edit" id="gdoc" class="link">
-        <h2>Tu souhaites proposer/demander un trajet<br>ou tu es intéressé(e) par un trajet</h2>
-        <p class="link-title">Accéder au GDoc</p>
+      <a href="#" id="paris" class="link first-link show">
+        <h3>Paris</h3>
+        <p class="show-date">29 juin</p>
+      </a>
+      <a href="#" id="lille" class="link show">
+        <h3>Lille</h3>
+        <p class="show-date">16 septembre</p>
+      </a>
+      <a href="#" id="montpellier" class="link show">
+        <h3>Montpellier</h3>
+        <p class="show-date">28 octobre</p>
+      </a>
+      <a href="#" id="gdoc" class="link first-link">
+        <p class="link-catcher">Tu souhaites proposer/demander un trajet<br>ou tu es intéressé(e) par un trajet</p>
+        <h2>Accéder au GDoc</h2>
         <p class="link-subtitle">(demande d'accès nécessaire)</p>
       </a>
-      <a href="https://www.google.fr/maps/d/viewer?mid=ID_HERE" id="map" class="link">
-        <h2>Tu souhaites visualiser un résumé<br>des trajets proposés/demandés</h2>
-        <p class="link-title">Accéder à la carte Google Maps</p>
+      <a href="#" id="map" class="link">
+        <p class="link-catcher">Tu souhaites visualiser un résumé<br>des trajets proposés/demandés</p>
+        <h2>Accéder à la carte Google Maps</h2>
         <p class="link-subtitle">(public - accès en lecture uniquement)</p>
       </a>
     </div>
 
     <a href="https://discord.gg/dHjCMDQ7TV" id="discord" class="link">
-      <h2>Besoin d'aide pour utiliser le GDoc ? <br>Un problème sur la carte ?</h2>
-      <p class="link-title">Accéder au Discord d'assistance</p>
+      <p class="link-catcher">Besoin d'aide pour utiliser le GDoc ? <br>Un problème sur la carte ?</p>
+      <h2>Accéder au Discord d'assistance</h2>
     </a>
   </main>
 
