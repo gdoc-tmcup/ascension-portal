@@ -3,10 +3,10 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Portail trajets & hébergements - Tournoi Ascension 2023</title>
+  <title>Portail trajets & hébergements - Tournoi Ascension 2024</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta property="og:title" content="Ascension 2023 - Portail trajets & hébergements">
+  <meta property="og:title" content="Ascension 2024 - Portail trajets & hébergements">
   <meta property="og:description" content="Crée/cherche un covoiturage, et propose/rejoins des trajets en train/car et des hébergements !">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://gdoc-ascension.fr/">
@@ -42,70 +42,45 @@
       margin-bottom: 10px;
     }
 
-    #choose-show {
-      display: none;
-    }
-
     #links {
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: center;
       width: 100%;
-    }
 
-    #links h3 {
-      margin: 10px auto;
-    }
-
-    #links > * {
-      width: 49%;
-    }
-
-    main[display-shows] #links .link:not(.show) {
-      display: none;
-    }
-
-    main[display-shows] #links .show, main[display-shows] #choose-show {
-      display: block;
+      & a {
+        width: 49%;
+      }
     }
 
     .link {
-      border: 4px solid #82ff01;
+      border: 4px solid #67ff00;
       text-decoration: none;
       background-color: #131313;
       transition: 0.4s;
       padding: 0 5px;
+
+      &:hover {
+        background-color: #67ff00;
+        border-color: #67ff00;
+
+        & * {
+          color: black;
+        }
+      }
     }
 
-    .link:hover {
-      background-color: #82ff01;
-      border-color: #82ff01;
-    }
-
-    .link:hover * {
-      color: black;
-    }
-
-    .link-catcher {
+    h2 {
       font-size: 1.1rem;
       font-weight: unset;
       margin-bottom: 0;
     }
 
-    .link h2, .link h3 {
+    .link-title {
       font-size: 1.5rem;
       font-weight: bold;
       margin-top: 10px;
       margin-bottom: 0;
-    }
-
-    .show {
-      display: none;
-    }
-
-    .show .show-date {
-      margin: 0;
-      margin-bottom: 10px;
     }
 
     .link-subtitle {
@@ -116,13 +91,13 @@
       width: 55%;
       margin: 10px auto 0;
       display: block;
+
+      & br {
+        display: none;
+      }
     }
 
-    #discord br {
-      display: none;
-    }
-
-    #discord h2 {
+    #discord .link-title {
       margin-bottom: 16px;
     }
 
@@ -160,27 +135,17 @@
         flex-direction: column;
       }
 
-      #links > *, #discord {
+      #links a, #discord {
         width: 100%;
         max-width: 400px;
       }
 
-      #links > *:not(.first-link) {
+      #links a:last-child {
         margin-top: 10px;
       }
 
-      .link h2, .link h3 {
+      .link-title {
         font-size: 1.4rem;
-      }
-
-      #choose-show {
-        font-size: 1.3rem;
-      }
-    }
-
-    @media screen and (min-width: 750px) {
-      main[display-shows] #links > * {
-        width: 32%;
       }
     }
 
@@ -190,82 +155,35 @@
       }
     }
   </style>
-
-  <script type="application/javascript">
-    document.addEventListener("DOMContentLoaded", () => {
-      const mainElement = document.querySelector("main");
-      const showElements = document.querySelectorAll(".show");
-      const gdocButton = document.getElementById("gdoc");
-      const mapButton = document.getElementById("map");
-
-      const gdocLinks = {
-        // paris: "https://docs.google.com/spreadsheets/d/15xbnucOdxAX7OhyicJstu51WFxZnIBCy4KuJoR8DEVQ/edit",
-        // lille: "https://docs.google.com/spreadsheets/d/1RGtVuJfqghPa7z4-GuKdAEQ79iYT-1ZZFWH1Nbo8Y48/edit",
-        montpellier: "https://docs.google.com/spreadsheets/d/1oQ6oT-GDYVcyxKN2Ir5ue343tojbdNXzFTeY54rHsBo/edit"
-      };
-      const mapLinks = {
-        // paris: "https://www.google.fr/maps/d/u/0/edit?mid=1Jqqa3eDbr99kn7GkVRbdhCdrPsHGVBM",
-        // lille: "https://www.google.fr/maps/d/u/0/edit?mid=1esTfdKj7CVG8JMDNl7yypj6XX0Tm61U",
-        montpellier: "https://www.google.fr/maps/d/u/0/edit?mid=1pggw1gw3BkR9c4ackm52SPVKMSgIFzg"
-      };
-
-      showElements.forEach((element) => {
-        element.addEventListener("click", () => {
-          toggleShowsDisplay();
-          gdocButton.setAttribute("href", gdocLinks[element.id]);
-          mapButton.setAttribute("href", mapLinks[element.id]);
-        });
-      });
-
-      function toggleShowsDisplay()
-      {
-        mainElement.toggleAttribute("display-shows");
-      }
-    });
-  </script>
 </head>
 
 <body>
-  <h1>Portail d'organisation des trajets / hébergements pour Ascension 2023</h1>
+  <h1>Portail d'organisation des trajets / hébergements pour Ascension 2024</h1>
 
-  <main display-shows>
-    <img src="img/visuel-ascension-2023.jpg" alt="Visuel du tournoi Ascension 2023" width="100%" id="image-desktop" loading="lazy" />
-    <img src="img/visuel-ascension-2023-mobile.jpg" alt="Bannière du tournoi Ascension 2023" width="100%" id="image-mobile" loading="lazy" />
-
-    <h2 id="choose-show">Choisis le spectacle qui t'intéresse :</h2>
+  <main>
+    <img src="img/visuel-ascension-2024.jpg" alt="Visuel du tournoi Ascension 2024" width="100%" id="image-desktop" loading="lazy" />
+    <img src="img/visuel-ascension-2024-mobile.jpg" alt="Bannière du tournoi Ascension 2024" width="100%" id="image-mobile" loading="lazy" />
 
     <div id="links">
-      <!--<a href="#" id="paris" class="link first-link show">
-        <h3>Paris</h3>
-        <p class="show-date">29 juin</p>
-      </a>-->
-     <!-- <a href="#" id="lille" class="link first-link show">
-        <h3>Lille</h3>
-        <p class="show-date">16 septembre</p>
-      </a>-->
-      <a href="#" id="montpellier" class="link first-link show">
-        <h3>Montpellier</h3>
-        <p class="show-date">28 octobre</p>
-      </a>
-      <a href="#" id="gdoc" class="link first-link">
-        <p class="link-catcher">Tu souhaites proposer/demander un trajet<br>ou tu es intéressé(e) par un trajet</p>
-        <h2>Accéder au GDoc</h2>
+      <a href="https://docs.google.com/spreadsheets/d/1bSLE__4wtaKbl3ZUx-nZN26ICRA_oClrtj2ROSJuC-8/edit" id="gdoc" class="link">
+        <h2>Tu souhaites proposer/demander un trajet<br>ou un trajet proposé t'intéresse</h2>
+        <p class="link-title">Accéder au GDoc</p>
         <p class="link-subtitle">(demande d'accès nécessaire)</p>
       </a>
-      <a href="#" id="map" class="link">
-        <p class="link-catcher">Tu souhaites visualiser un résumé<br>des trajets proposés/demandés</p>
-        <h2>Accéder à la carte Google Maps</h2>
+      <a href="https://www.google.fr/maps/d/viewer?mid=1IOc86njnn_ESYEvuHGIMu5hDkXe_aE8" id="map" class="link">
+        <h2>Tu souhaites visualiser un résumé<br>des trajets proposés/demandés</h2>
+        <p class="link-title">Accéder à la carte Google Maps</p>
         <p class="link-subtitle">(public - accès en lecture uniquement)</p>
       </a>
     </div>
 
     <a href="https://discord.gg/dHjCMDQ7TV" id="discord" class="link">
-      <p class="link-catcher">Besoin d'aide pour utiliser le GDoc ? <br>Un problème sur la carte ?</p>
-      <h2>Accéder au Discord d'assistance</h2>
+      <h2>Besoin d'aide pour utiliser le GDoc ? <br>Un problème sur la carte ?</h2>
+      <p class="link-title">Accéder au Discord d'assistance</p>
     </a>
   </main>
 
-  <footer>Ces outils ont été créés par un viewer et ne sont affiliés ni à ZT Production, ni à ZQSD Productions.</footer>
+  <footer>Ces outils ont été créés par un viewer et ne sont affiliés ni à ZT Production, ni à ZQSD Productions, ni à Epic Games.</footer>
 </body>
 
 </html>
